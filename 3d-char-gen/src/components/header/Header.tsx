@@ -47,7 +47,7 @@ const Header: React.FC = () => {
 			<Nav>
 				<Link href="/">Home</Link>
 				<Link href="/profile">Profile</Link>
-				<Link href="/contact">Contact</Link>
+				<Link href="/signin">Sign In</Link>
 			</Nav>
 		</HeaderContainer>
 	);
