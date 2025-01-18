@@ -36,7 +36,7 @@ export default function ColorOptions({ selectedTab }: ColorOptionsProps) {
 		"ClothesColor",
 		"PantsColor",
 		"ShoesColor",
-	];
+	] as const;
 
 	// 선택된 탭의 색상 리스트 가져오기
 	const selectedKey = tabKeys[selectedTab - 1];

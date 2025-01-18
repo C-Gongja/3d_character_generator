@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 
 interface ThreeSceneProps {
-	containerRef: React.RefObject<HTMLDivElement>;
+	containerRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const ThreeScene: React.FC<ThreeSceneProps> = ({ containerRef }) => {
@@ -54,8 +54,10 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ containerRef }) => {
 
 			// Add the AxesHelper to show the coordinate axes
 			const axesHelper = new THREE.AxesHelper(2); // Axis size of 2
-			axesHelper.material.linewidth = 2; // Optional: Set linewidth for better visibility
-			axesHelper.material.color.set(0xffffff); // Set color to white
+			// Type assertion to LineBasicMaterial
+			const materialSetting = axesHelper.material as THREE.LineBasicMaterial;
+			materialSetting.linewidth = 2; // Optional: Set linewidth for better visibility
+			materialSetting.color.set(0xffffff); // Set color to white
 			scene.add(axesHelper);
 
 			// Lighting

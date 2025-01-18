@@ -1,6 +1,9 @@
+"use client"
+
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -35,12 +38,15 @@ const Nav = styled.nav`
 `;
 
 const Header: React.FC = () => {
+	const path = usePathname();
+	console.log(path);
+
 	return (
 		<HeaderContainer>
 			<Logo>3D Pixel Generator</Logo>
 			<Nav>
 				<Link href="/">Home</Link>
-				<Link href="/about">About</Link>
+				<Link href="/profile">Profile</Link>
 				<Link href="/contact">Contact</Link>
 			</Nav>
 		</HeaderContainer>
