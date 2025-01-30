@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { fetchAssets, fetchCategories } from "./api/custom/customApi";
-import { Asset, Category, Customization, Store } from "./api/custom/custom-Interface";
+import { Asset, Category, Customization, Store } from "./components/custom-components/custom-Interface";
 
 export const useConfigStore = create<Store>((set) => ({
 	categories: [],
@@ -36,11 +36,18 @@ export const useConfigStore = create<Store>((set) => ({
 		}
 	},
 	setCurrentCategory: (category: Category) => set({ currentCategory: category }),
-	changeAsset: (category: string, asset: Asset) => set((state) => ({
-		customization: {
-			...state.customization,
-			[category]:
-				asset,
-		},
-	})),
+	changeAsset: (category: string, asset: Asset) => set((state) => {
+		{
+			// stored asset
+			const currentAsset = state.customization[category];
+
+			// if a category has starting asset then set to starting asset
+			return {
+				customization: {
+					...state.customization,
+					[category]: currentAsset?.id === asset.id ? null : asset,
+				},
+			};
+		}
+	}),
 }));

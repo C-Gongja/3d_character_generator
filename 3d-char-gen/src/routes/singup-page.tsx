@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ExternalAuthButtons from "../components/auth-components/externalAuth";
+import { fetchSignup } from "../api/auth/auth";
 
 export default function SignUp() {
 	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
-	const [name, setName] = useState("");
-	const [username, setUsername] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [bio, setBio] = useState("");
-	const [birthDate, setBirthDate] = useState("");
+	const [formData, setFormData] = useState({
+		name: "",
+		username: "",
+		email: "",
+		password: "",
+		bio: "",
+		birthDate: ""
+	});
 
 	const checkDisplayNameUnique = async (displayName: string): Promise<boolean> => {
 		return !!displayName;
@@ -19,29 +22,24 @@ export default function SignUp() {
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
-		if (name === "name") setName(value);
-		else if (name === "username") setUsername(value);
-		else if (name === "email") setEmail(value);
-		else if (name === "password") setPassword(value);
-		else if (name === "bio") setBio(value);
-		else if (name === "birthDate") setBirthDate(value);
+		setFormData(prevState => ({ ...prevState, [name]: value }));
 	};
 
 	const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		setError("");
 
-		if (isLoading || !name || !username || !email || !password || !birthDate) return;
+		if (isLoading || !formData.name || !formData.username || !formData.email || !formData.password || !formData.birthDate) return;
 
 		try {
 			setIsLoading(true);
 
-			const isUnique = await checkDisplayNameUnique(username);
+			const isUnique = await checkDisplayNameUnique(formData.username);
 			if (!isUnique) {
 				alert("Username is already taken, please choose another one.");
 				return;
 			}
-
+			fetchSignup(formData);
 			navigate("/");
 		} catch (e) {
 			console.log(e);
@@ -59,7 +57,7 @@ export default function SignUp() {
 					<input
 						onChange={onChange}
 						name="name"
-						value={name}
+						value={formData.name}
 						placeholder="Name"
 						type="text"
 						required
@@ -68,7 +66,7 @@ export default function SignUp() {
 					<input
 						onChange={onChange}
 						name="username"
-						value={username}
+						value={formData.username}
 						placeholder="Username"
 						type="text"
 						required
@@ -77,7 +75,7 @@ export default function SignUp() {
 					<input
 						onChange={onChange}
 						name="email"
-						value={email}
+						value={formData.email}
 						placeholder="Email"
 						type="email"
 						required
@@ -86,7 +84,7 @@ export default function SignUp() {
 					<input
 						onChange={onChange}
 						name="password"
-						value={password}
+						value={formData.password}
 						placeholder="Password"
 						type="password"
 						required
@@ -95,7 +93,7 @@ export default function SignUp() {
 					<input
 						onChange={onChange}
 						name="bio"
-						value={bio}
+						value={formData.bio}
 						placeholder="Bio (Optional)"
 						type="text"
 						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500"
@@ -103,7 +101,7 @@ export default function SignUp() {
 					<input
 						onChange={onChange}
 						name="birthDate"
-						value={birthDate}
+						value={formData.birthDate}
 						placeholder="Date of Birth"
 						type="date"
 						required

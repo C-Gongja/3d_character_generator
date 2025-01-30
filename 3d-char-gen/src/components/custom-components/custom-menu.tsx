@@ -8,7 +8,8 @@ import ColorOptions from "./color-options";
 const CustomContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	padding: 20px;
+	border: 1px solid white;
 `;
 export default function CustomMenu() {
 	const { fetchCustoms } = useConfigStore();

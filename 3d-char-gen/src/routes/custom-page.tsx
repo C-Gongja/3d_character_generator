@@ -6,7 +6,7 @@ import Preview from "../components/preview-components/preview";
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr;
+  grid-template-columns: 1.3fr 1fr 1fr;
   gap: 20px; /* Add space between columns */
   height: calc(100vh - 10vh);
   border: 1px solid white;

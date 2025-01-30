@@ -13,6 +13,7 @@ const CustomInput = styled.textarea`
   padding: 10px;
   background-color: black;
   border: 1px solid white;
+	font-size: 20px;
 `;
 
 type FormValues = {
@@ -46,7 +47,7 @@ export default function IDCustom({ setFormValues }: { setFormValues: React.Dispa
 		<IDCustomContainer>
 			{fields.map((field) => (
 				<div key={field.id}>
-					<p>{field.label}</p>
+					<h2>{field.label}</h2>
 					<CustomInput
 						name={field.id}
 						placeholder={field.label}

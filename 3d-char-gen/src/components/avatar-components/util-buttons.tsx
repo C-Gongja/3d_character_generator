@@ -15,6 +15,7 @@ const FunctionBtn = styled.button`
 	width: 50%;
 	border-radius: 20px;
 	font-size: 25px;
+	cursor: pointer;
 
 	&:hover{
 		background-color: gray;

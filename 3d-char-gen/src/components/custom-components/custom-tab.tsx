@@ -13,7 +13,8 @@ const TabContainer = styled.div`
 
 const TabItem = styled.div<TabItemProps>`
   padding: 10px 20px;
-	border: 0.5px solid white;
+	font-size: 18px;
+	/* border: 0.5px solid white; */
   cursor: pointer;
   transition: background-color 0.3s ease;
 

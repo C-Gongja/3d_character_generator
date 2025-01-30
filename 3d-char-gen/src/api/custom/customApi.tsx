@@ -1,4 +1,4 @@
-import { Asset, Category } from "./custom-Interface";
+import { Asset, Category } from "../../components/custom-components/custom-Interface";
 
 const BASE_URL = "http://localhost:5001/api/custom";
 
