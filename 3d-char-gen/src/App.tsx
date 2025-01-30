@@ -32,11 +32,10 @@ const router = createBrowserRouter([
 function App() {
 	const [isLoading, setIsLoading] = useState(true);
 	const init = async () => {
-		await auth.authStateReady();
-		//wait for firebase
 		setIsLoading(false);
 		// setTimeout(() => setIsLoading(false), 2000); // for testing 
 	};
+
 	useEffect(() => {
 		// init();
 		setIsLoading(false);

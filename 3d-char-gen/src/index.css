@@ -65,3 +65,11 @@ button:focus-visible {
 		background-color: #f9f9f9;
 	}
 }
+
+@font-face {
+	font-family: 'PixelFont';
+	src: url('/fonts/DungGeunMo/DungGeunMo.eot');
+	src: url('/fonts/DungGeunMo/DungGeunMo.ttf');
+	src: url('/fonts/DungGeunMo/DungGeunMo.woff');
+	src: url('/fonts/DungGeunMo/DungGeunMo.woff2');
+}

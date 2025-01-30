@@ -1,25 +1,26 @@
-import React from 'react';
+import React, { } from 'react';
 import styled from 'styled-components';
 import { useConfigStore } from '../../custom-store';
 
-// styled-components로 스타일링
 const TabContainer = styled.div`
   border: 1px solid white;
-  height: 50px;
+  height: auto;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: start;
+	flex-wrap: wrap; /* 탭이 많아지면 자동으로 줄 바꿈 */
 `;
 
 const TabItem = styled.div<TabItemProps>`
   padding: 10px 20px;
+	border: 0.5px solid white;
   cursor: pointer;
   transition: background-color 0.3s ease;
 
   ${(props) =>
 		props.active
 			? `
-      background-color: #007bff;
+      background-color: indigo;
       color: white;
       font-weight: bold;
     `

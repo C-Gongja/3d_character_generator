@@ -1,34 +1,46 @@
 import { create } from "zustand";
 import { fetchAssets, fetchCategories } from "./api/custom/customApi";
-import { Asset, Category, Store } from "./api/custom/custom-Interface";
+import { Asset, Category, Customization, Store } from "./api/custom/custom-Interface";
 
 export const useConfigStore = create<Store>((set) => ({
 	categories: [],
 	currentCategory: null,
 	assets: [],
+	customization: {},
 	fetchCustoms: async () => {
 		try {
 			const categories = await fetchCategories();
 			const assets = await fetchAssets();
 
-			console.log("categories: ", categories);
-			console.log("assets: ", assets);
+			const customization: Customization = {};
 
-			// categories가 배열인지 확인
 			if (Array.isArray(categories)) {
 				categories.forEach((category: Category) => {
 					category.assets = assets.filter((asset: Asset) => asset.groupid === category.id);
+					//store an empty asset
+					customization[category.name] = {};
+					if (category.startingAssetId != null) {
+						customization[category.name] = category.assets.find(
+							(asset) => asset.id === category.startingAssetId
+						);
+					}
 				});
 
-				set({ categories, currentCategory: categories[0], assets });
+				set({ categories, currentCategory: categories[0], assets, customization });
 
 			} else {
 				throw new Error('Fetched categories are not an array');
 			}
-			console.log("categories: ", categories);
 		} catch (error) {
 			console.error("Error fetching data:", error);
 		}
 	},
 	setCurrentCategory: (category: Category) => set({ currentCategory: category }),
+	changeAsset: (category: string, asset: Asset) => set((state) => ({
+		customization: {
+			...state.customization,
+			[category]:
+				asset,
+		},
+	})),
 }));
