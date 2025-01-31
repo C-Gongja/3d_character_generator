@@ -1,7 +1,10 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { useUserStore } from '../../user-store';
+import { useNavigate } from 'react-router-dom';
 
 const navigation = [
-	{ name: 'Home', href: '#', current: true },
+	{ name: 'Home', href: '/', current: true },
+	{ name: 'Profile', href: '/profile', current: true }
 ]
 
 function classNames(...classes: string[]) {
@@ -9,6 +12,15 @@ function classNames(...classes: string[]) {
 }
 
 export default function Navbar() {
+	const { user, clearUser } = useUserStore();
+	const navigate = useNavigate();
+
+	const handleSignOut = () => {
+		clearUser();
+		localStorage.removeItem('token');
+		navigate('/');
+	};
+
 	return (
 		<Disclosure as="nav" className="fixed top-0 w-full z-50 bg-gray-800">
 			<div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -40,50 +52,50 @@ export default function Navbar() {
 						</div>
 					</div>
 					<div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
-						{/* Profile dropdown */}
-						<Menu as="div" className="relative ml-3">
-							<div>
-								<MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
-									<span className="absolute -inset-1.5" />
-									<span className="sr-only">Open user menu</span>
-									<img
-										alt=""
-										src=""
-										className="size-8 rounded-full"
-									/>
-								</MenuButton>
-							</div>
-							<MenuItems
-								transition
-								className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+						{user ? (
+							// if user logged in
+							<Menu as="div" className="relative">
+								<div>
+									<MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+										<img
+											alt={user.name}
+											src="/default-profile.png" // 프로필 이미지 경로 (실제 이미지 적용 가능)
+											className="h-8 w-8 rounded-full"
+										/>
+									</MenuButton>
+								</div>
+								<MenuItems className="absolute right-0 mt-2 w-48 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
+									<MenuItem>
+										{({ active }) => (
+											<a
+												href="/settings"
+												className={`block px-4 py-2 text-sm ${active ? 'bg-gray-100' : 'text-gray-700'}`}
+											>
+												Settings
+											</a>
+										)}
+									</MenuItem>
+									<MenuItem>
+										{({ active }) => (
+											<button
+												onClick={handleSignOut}
+												className={`block w-full text-left px-4 py-2 text-sm ${active ? 'bg-gray-100' : 'text-gray-700'}`}
+											>
+												Sign out
+											</button>
+										)}
+									</MenuItem>
+								</MenuItems>
+							</Menu>
+						) : (
+							// user not logged in
+							<button
+								onClick={() => navigate('/login')}
+								className="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-md"
 							>
-								<MenuItem>
-									<a
-										href="#"
-										className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
-									>
-										Your Profile
-									</a>
-								</MenuItem>
-								<MenuItem>
-									<a
-										href="#"
-										className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
-									>
-										Settings
-									</a>
-								</MenuItem>
-								<MenuItem>
-									<a
-										href="#"
-										className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
-									>
-										Sign out
-									</a>
-								</MenuItem>
-							</MenuItems>
-						</Menu>
+								Sign In
+							</button>
+						)}
 					</div>
 				</div>
 			</div>

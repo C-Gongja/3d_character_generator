@@ -19,35 +19,35 @@ const CustomInput = styled.textarea`
 type FormValues = {
 	name: string;
 	gender: string;
-	place: string;
-	description: string;
+	location: string;
+	bio: string;
 	serialNum: string;
 };
 
-export default function IDCustom({ setFormValues }: { setFormValues: React.Dispatch<React.SetStateAction<FormValues>>; }) {
+export default function IDCustom({ userProfile, setUserProfile }: { userProfile: FormValues; setUserProfile: React.Dispatch<React.SetStateAction<FormValues>>; }) {
 	const maxLength = 10;
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
-		setFormValues((prev) => ({
+		setUserProfile((prev) => ({
 			...prev,
 			[name]: value,
 		}));
 	};
 
 	const fields = [
-		{ id: "name", label: "Name" },
-		{ id: "gender", label: "Gender" },
-		{ id: "place", label: "Place" },
-		{ id: "description", label: "Description" },
-		{ id: "serialNum", label: "User ID" },
+		{ id: "name", label: userProfile.name ? userProfile.name : "Name" },
+		{ id: "gender", label: userProfile.gender ? userProfile.gender : "Gender" },
+		{ id: "location", label: userProfile.location ? userProfile.location : "Location" },
+		{ id: "bio", label: userProfile.bio ? userProfile.bio : "Bio" },
+		{ id: "serialNum", label: userProfile.serialNum ? userProfile.serialNum : "User ID" },
 	];
 
 	return (
 		<IDCustomContainer>
 			{fields.map((field) => (
 				<div key={field.id}>
-					<h2>{field.label}</h2>
+					<h2>{field.id}</h2>
 					<CustomInput
 						name={field.id}
 						placeholder={field.label}

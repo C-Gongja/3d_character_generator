@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ExternalAuthButtons from "../components/auth-components/externalAuth";
-import { fetchSignup } from "../api/auth/auth";
+import { fetchSignup } from "../api/auth/authApi";
+import { SignupFormData } from "../api/auth/user-types";
+import { useUserStore } from "../user-store";
 
 export default function SignUp() {
 	const navigate = useNavigate();
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState("");
-	const [formData, setFormData] = useState({
+	const [formData, setFormData] = useState<SignupFormData>({
 		name: "",
 		username: "",
 		email: "",
@@ -15,10 +17,7 @@ export default function SignUp() {
 		bio: "",
 		birthDate: ""
 	});
-
-	const checkDisplayNameUnique = async (displayName: string): Promise<boolean> => {
-		return !!displayName;
-	};
+	const { setUser, setToken } = useUserStore();
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
@@ -29,18 +28,16 @@ export default function SignUp() {
 		e.preventDefault();
 		setError("");
 
-		if (isLoading || !formData.name || !formData.username || !formData.email || !formData.password || !formData.birthDate) return;
+		if (isLoading || !formData.name || !formData.email || !formData.password || !formData.birthDate) return;
 
 		try {
 			setIsLoading(true);
 
-			const isUnique = await checkDisplayNameUnique(formData.username);
-			if (!isUnique) {
-				alert("Username is already taken, please choose another one.");
-				return;
-			}
-			fetchSignup(formData);
+			const userInfo = await fetchSignup(formData);
+			setUser(userInfo.user);
+			setToken(userInfo.accessToken)
 			navigate("/");
+
 		} catch (e) {
 			console.log(e);
 		} finally {
@@ -52,7 +49,7 @@ export default function SignUp() {
 		<div className="flex h-screen w-full items-center justify-center">
 			<div className="flex flex-col items-center w-[420px]">
 				<img src={""} alt="Logo" className="mb-6 h-[90px]" />
-				<h1 className="text-white text-4xl mb-4">Create your account</h1>
+				<h2 className="text-white text-4xl mb-4">Create your account</h2>
 				<form onSubmit={onSubmit} className="flex flex-col gap-2 w-full mt-8">
 					<input
 						onChange={onChange}
@@ -61,7 +58,7 @@ export default function SignUp() {
 						placeholder="Name"
 						type="text"
 						required
-						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500"
+						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500 text-white"
 					/>
 					<input
 						onChange={onChange}
@@ -70,7 +67,7 @@ export default function SignUp() {
 						placeholder="Username"
 						type="text"
 						required
-						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500"
+						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500 text-white"
 					/>
 					<input
 						onChange={onChange}
@@ -79,7 +76,7 @@ export default function SignUp() {
 						placeholder="Email"
 						type="email"
 						required
-						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500"
+						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500 text-white"
 					/>
 					<input
 						onChange={onChange}
@@ -88,7 +85,7 @@ export default function SignUp() {
 						placeholder="Password"
 						type="password"
 						required
-						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500"
+						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500 text-white"
 					/>
 					<input
 						onChange={onChange}
@@ -96,7 +93,7 @@ export default function SignUp() {
 						value={formData.bio}
 						placeholder="Bio (Optional)"
 						type="text"
-						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500"
+						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500 text-white"
 					/>
 					<input
 						onChange={onChange}
@@ -105,7 +102,7 @@ export default function SignUp() {
 						placeholder="Date of Birth"
 						type="date"
 						required
-						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500"
+						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500 text-white"
 					/>
 					<input
 						type="submit"

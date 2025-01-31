@@ -1,10 +1,11 @@
+import { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/layout";
 // import ProtectedRoute from "./components/protected-route";
 import LogIn from "./routes/login-page";
 import SignUp from "./routes/singup-page";
 import CustomPage from "./routes/custom-page";
-import { useEffect, useState } from "react";
+import Profile from "./routes/profile";
 import LoadingScreen from "./components/loading-screen";
 
 const router = createBrowserRouter([
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
 			{
 				path: "",
 				element: <CustomPage />,
+			},
+			{
+				path: "/profile",
+				element: <Profile />,
 			},
 		]
 	},

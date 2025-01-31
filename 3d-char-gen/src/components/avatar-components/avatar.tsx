@@ -8,7 +8,6 @@ export const Avatar = ({ ...props }: JSX.IntrinsicElements["group"]) => {
 	const group = useRef<Group>(null);
 	const { nodes } = useGLTF('/model/Armature.glb');
 	const customization = useConfigStore((state) => state.customization);
-	console.log("customization at Avatar: ", customization);
 
 	return (
 		<group ref={group} {...props} dispose={null}>

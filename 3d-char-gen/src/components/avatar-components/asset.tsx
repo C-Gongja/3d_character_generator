@@ -3,7 +3,6 @@ import { useMemo } from "react";
 
 export const Asset = ({ url, skeleton }) => {
 	const { scene } = useGLTF(url);
-	console.log("url: ", url);
 
 	const attachedItems = useMemo(() => {
 		const items = [];
