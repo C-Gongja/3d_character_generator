@@ -1,5 +1,6 @@
 import React, { } from "react";
 import styled from "styled-components";
+import { useCustomStore } from "../../state-management/userCustom-store";
 
 const IDCustomContainer = styled.div`
   padding: 20px;
@@ -16,23 +17,17 @@ const CustomInput = styled.textarea`
 	font-size: 20px;
 `;
 
-type FormValues = {
-	name: string;
-	gender: string;
-	location: string;
-	bio: string;
-	serialNum: string;
-};
 
-export default function IDCustom({ userProfile, setUserProfile }: { userProfile: FormValues; setUserProfile: React.Dispatch<React.SetStateAction<FormValues>>; }) {
-	const maxLength = 10;
+export default function IDCustom() {
+	const { userProfile, setUserProfile } = useCustomStore();
+	const maxLength = 63;
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
-		setUserProfile((prev) => ({
-			...prev,
-			[name]: value,
-		}));
+		setUserProfile({
+			...userProfile,  // 기존 상태를 복사
+			[name]: value,   // 변경된 필드만 업데이트
+		});
 	};
 
 	const fields = [

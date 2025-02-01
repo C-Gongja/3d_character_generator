@@ -1,4 +1,4 @@
-import { useConfigStore } from "../../custom-store";
+import { useConfigStore } from "../../state-management/custom-store";
 
 export default function CustomAssets() {
 	const { currentCategory, changeAsset, customization } = useConfigStore();

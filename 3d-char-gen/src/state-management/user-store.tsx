@@ -22,7 +22,7 @@ export const useUserStore = create<UserState>()(
 			user: null,
 			accessToken: null,
 			setToken: (accessToken) => {
-				localStorage.setItem("accessToken", accessToken); // ✅ localStorage에 저장
+				localStorage.setItem("accessToken", accessToken);
 			},
 			setUser: (user) => {
 				set({ user });
@@ -30,7 +30,7 @@ export const useUserStore = create<UserState>()(
 			clearUser: () => {
 				set({ user: null });
 				set({ accessToken: null });
-				localStorage.removeItem("accessToken"); // ✅ 로그아웃 시 삭제
+				localStorage.removeItem("accessToken");
 			},
 		}),
 		{

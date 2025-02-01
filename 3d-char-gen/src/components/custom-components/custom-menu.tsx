@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useConfigStore } from "../../custom-store";
+import { useConfigStore } from "../../state-management/custom-store";
 import CustomTab from "./custom-tab";
 import styled from "styled-components";
 import CustomAssets from "./custom-assets";

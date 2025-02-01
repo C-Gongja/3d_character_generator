@@ -1,5 +1,6 @@
 import React, { } from "react";
 import styled from "styled-components";
+import { useCustomStore } from "../../state-management/userCustom-store";
 
 const FunctionsContainer = styled.div`
 	border: 1px solid white;
@@ -23,11 +24,17 @@ const FunctionBtn = styled.button`
 `;
 
 export default function UtilButtons() {
+	const { updateUserCustomProfile } = useCustomStore();
+
+	const handleSave = () => {
+		console.log("click save");
+		updateUserCustomProfile();
+	}
 
 	return (
 		<FunctionsContainer>
 			<FunctionBtn>Random</FunctionBtn>
-			<FunctionBtn>Save</FunctionBtn>
+			<FunctionBtn onClick={handleSave}>Save</FunctionBtn>
 			<FunctionBtn>Reset</FunctionBtn>
 		</FunctionsContainer>
 	);

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ExternalAuthButtons from "../components/auth-components/externalAuth";
 import { fetchSignup } from "../api/auth/authApi";
 import { SignupFormData } from "../api/auth/user-types";
-import { useUserStore } from "../user-store";
+import { useUserStore } from "../state-management/user-store";
 
 export default function SignUp() {
 	const navigate = useNavigate();
@@ -113,7 +113,7 @@ export default function SignUp() {
 				{error && <span className="font-semibold text-red-500 mt-2">{error}</span>}
 				<p className="text-lg mt-5 text-center">
 					Already have an account? &nbsp;
-					<Link to="/signin" className="text-blue-500">Sign in</Link>
+					<Link to="/login" className="text-blue-500">Sign in</Link>
 				</p>
 				<ExternalAuthButtons />
 			</div>

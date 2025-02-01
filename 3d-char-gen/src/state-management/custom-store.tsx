@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { fetchAssets, fetchCategories } from "./api/custom/customApi";
-import { Asset, Category, Customization, Store } from "./components/custom-components/custom-Interface";
+import { fetchAssets, fetchCategories } from "../api/custom/customApi.ts";
+import { Asset, Category, Customization, Store } from "../components/custom-components/custom-Interface";
 
 export const useConfigStore = create<Store>((set) => ({
 	categories: [],

@@ -1,6 +1,6 @@
 import React, { } from 'react';
 import styled from 'styled-components';
-import { useConfigStore } from '../../custom-store';
+import { useConfigStore } from '../../state-management/custom-store';
 
 const TabContainer = styled.div`
   border: 1px solid white;

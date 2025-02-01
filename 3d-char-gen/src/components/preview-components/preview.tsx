@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import IDPreview from "./id-preview";
 import IDCustom from "./id-custom";
-import { fetchUserProfile } from "../../api/user/userApi";
+// import { fetchUserProfile } from "../../api/user/userApi";
+import { useCustomStore } from "../../state-management/userCustom-store";
 
 const PreviewContainer = styled.div`
 	padding: 20px;
@@ -12,37 +13,19 @@ const PreviewContainer = styled.div`
 	gap: 20px;
 `;
 
-const initialFormValues = {
-	name: "",
-	gender: "",
-	location: "",
-	bio: "",
-	serialNum: "",
-};
-
 export default function Preview() {
-	const [userProfile, setUserProfile] = useState(initialFormValues);
+	// const [userProfile, setUserProfile] = useState(initialFormValues);
+	const { loadUserProfile } = useCustomStore();
 
 	// 여기서 유저 정보 가져오기
 	useEffect(() => {
-		const getUserProfile = async () => {
-			try {
-				const profile = await fetchUserProfile();
-				console.log("profile: ", profile);
-				setUserProfile(profile);
-				console.log("userprofile: ", userProfile);
-			} catch (error) {
-				console.error('Error fetching user profile:', error);
-			}
-		};
-
-		getUserProfile();
+		loadUserProfile();
 	}, []);
 
 	return (
 		<PreviewContainer>
-			<IDPreview userProfile={userProfile} />
-			<IDCustom userProfile={userProfile} setUserProfile={setUserProfile} />
+			<IDPreview />
+			<IDCustom />
 		</PreviewContainer>
 	);
 }
