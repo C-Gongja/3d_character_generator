@@ -3,6 +3,9 @@ import styled from "styled-components";
 import CustomMenu from "../components/custom-components/custom-menu";
 import AvatarContainer from "../components/avatar-components/avatar-container";
 import Preview from "../components/preview-components/preview";
+import { useConfigStore } from "../state-management/custom-store";
+import { useCustomStore } from "../state-management/userCustom-store";
+import { useEffect } from "react";
 
 const Wrapper = styled.div`
   display: grid;
@@ -16,6 +19,17 @@ const Wrapper = styled.div`
 
 function CustomPage() {
 	// const { categories, currentCategories, fetchCustoms, setCurrentCategory } = useConfigStore();
+	const { fetchCustoms } = useConfigStore();
+	const { loadUserCustomProfile } = useCustomStore();
+
+	useEffect(() => {
+		const loadData = async () => {
+			await fetchCustoms();
+			await loadUserCustomProfile();
+		};
+
+		loadData();
+	}, [fetchCustoms, loadUserCustomProfile]);
 
 	return (
 		<Wrapper>

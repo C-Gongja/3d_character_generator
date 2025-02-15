@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { useConfigStore } from "../../state-management/custom-store";
 import CustomTab from "./custom-tab";
 import styled from "styled-components";
 import CustomAssets from "./custom-assets";
@@ -12,11 +10,11 @@ const CustomContainer = styled.div`
 	border: 1px solid white;
 `;
 export default function CustomMenu() {
-	const { fetchCustoms } = useConfigStore();
+	// const { fetchCustoms } = useConfigStore();
 
-	useEffect(() => {
-		fetchCustoms();
-	}, []);
+	// useEffect(() => {
+	// 	fetchCustoms();
+	// }, []);
 
 	return (
 		<CustomContainer>

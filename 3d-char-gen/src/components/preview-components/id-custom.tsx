@@ -1,6 +1,6 @@
 import React, { } from "react";
 import styled from "styled-components";
-import { useCustomStore } from "../../state-management/userCustom-store";
+import { useCustomStore, UserCustomProfile } from "../../state-management/userCustom-store";
 
 const IDCustomContainer = styled.div`
   padding: 20px;
@@ -19,23 +19,20 @@ const CustomInput = styled.textarea`
 
 
 export default function IDCustom() {
-	const { userProfile, setUserProfile } = useCustomStore();
+	const { userCustomProfile, updateField } = useCustomStore();
 	const maxLength = 63;
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		const { name, value } = e.target;
-		setUserProfile({
-			...userProfile,  // 기존 상태를 복사
-			[name]: value,   // 변경된 필드만 업데이트
-		});
+		updateField(name as keyof UserCustomProfile, value);
 	};
 
 	const fields = [
-		{ id: "name", label: userProfile.name ? userProfile.name : "Name" },
-		{ id: "gender", label: userProfile.gender ? userProfile.gender : "Gender" },
-		{ id: "location", label: userProfile.location ? userProfile.location : "Location" },
-		{ id: "bio", label: userProfile.bio ? userProfile.bio : "Bio" },
-		{ id: "serialNum", label: userProfile.serialNum ? userProfile.serialNum : "User ID" },
+		{ id: "username", label: userCustomProfile.username ? userCustomProfile.username : "Name" },
+		{ id: "gender", label: userCustomProfile.gender ? userCustomProfile.gender : "Gender" },
+		{ id: "location", label: userCustomProfile.location ? userCustomProfile.location : "Location" },
+		{ id: "bio", label: userCustomProfile.bio ? userCustomProfile.bio : "Bio" },
+		{ id: "serial_num", label: userCustomProfile.serial_num ? userCustomProfile.serial_num : "User ID" },
 	];
 
 	return (
@@ -47,6 +44,7 @@ export default function IDCustom() {
 						name={field.id}
 						placeholder={field.label}
 						maxLength={maxLength + 1}
+						value={userCustomProfile[field.id as keyof UserCustomProfile]}
 						onChange={handleChange}
 					/>
 				</div>

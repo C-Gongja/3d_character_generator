@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
 import IDPreview from "./id-preview";
 import IDCustom from "./id-custom";
-// import { fetchUserProfile } from "../../api/user/userApi";
-import { useCustomStore } from "../../state-management/userCustom-store";
 
 const PreviewContainer = styled.div`
 	padding: 20px;
@@ -14,13 +11,11 @@ const PreviewContainer = styled.div`
 `;
 
 export default function Preview() {
-	// const [userProfile, setUserProfile] = useState(initialFormValues);
-	const { loadUserProfile } = useCustomStore();
+	// const { loadUserProfile } = useCustomStore();
 
-	// 여기서 유저 정보 가져오기
-	useEffect(() => {
-		loadUserProfile();
-	}, []);
+	// useEffect(() => {
+	// 	loadUserProfile();
+	// }, []);
 
 	return (
 		<PreviewContainer>

@@ -1,13 +1,9 @@
 import { apiClient } from "./apiClient";
-import { UserProfile } from "../../state-management/userCustom-store";
+import { UserCustomProfile } from "../../state-management/userCustom-store";
 
-const BASE_URL = "http://localhost:5001/api/user";
 const CUSTOM_BASE_URL = "http://localhost:5001/api/usercustom";
 
-/**
- * 유저 정보를 가져오는 API
- */
-export const fetchUserProfile = async (): Promise<UserProfile | null> => {
+export const fetchUserCustom = async (): Promise<UserCustomProfile | null> => {
 	const user = JSON.parse(localStorage.getItem("user-storage") || "{}");
 	const userId = user?.state?.user?.id;
 
@@ -17,18 +13,15 @@ export const fetchUserProfile = async (): Promise<UserProfile | null> => {
 	}
 
 	try {
-		const data = await apiClient(`${BASE_URL}/${userId}`, { method: "GET" });
+		const data = await apiClient(`${CUSTOM_BASE_URL}/${userId}`, { method: "GET" });
 		return data.data;
 	} catch (error) {
-		console.error("Error fetching user profile:", error);
+		console.error("Error fetching user custom profile:", error);
 		return null;
 	}
 };
 
-/**
- * 유저 정보를 업데이트하는 API
- */
-export const fetchUserUpdate = async (updatedProfile: Partial<UserProfile>): Promise<boolean> => {
+export const fetchUserCustomUpdate = async (updatedProfile: Partial<UserCustomProfile>): Promise<boolean> => {
 	const user = JSON.parse(localStorage.getItem("user-storage") || "{}");
 	const userId = user?.state?.user?.id;
 
@@ -39,7 +32,7 @@ export const fetchUserUpdate = async (updatedProfile: Partial<UserProfile>): Pro
 
 	try {
 		await apiClient(`${CUSTOM_BASE_URL}/${userId}`, {
-			method: "PUT",
+			method: "PATCH",
 			body: JSON.stringify(updatedProfile),
 		});
 

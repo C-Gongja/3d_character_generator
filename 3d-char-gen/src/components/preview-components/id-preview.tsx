@@ -50,7 +50,7 @@ const UserDetail = styled.p`
 `;
 
 export default function IDPreview() {
-	const { userProfile } = useCustomStore();
+	const { userCustomProfile } = useCustomStore();
 
 	return (
 		<PreviewContainer>
@@ -58,11 +58,11 @@ export default function IDPreview() {
 				<StyledImg src="path_to_avatar_image.jpg" alt="avatar" />
 			</AvatarPic>
 			<UserInfo>
-				<StyledH1>{userProfile.name || "N/A"}</StyledH1>
-				<UserDetail><strong>Gender:</strong> {userProfile.gender || "N/A"}</UserDetail>
-				<UserDetail><strong>Location:</strong> {userProfile.location || "N/A"}</UserDetail>
-				<UserDetail><strong>Bio:</strong> {userProfile.bio || "N/A"}</UserDetail>
-				<UserDetail><strong>User ID:</strong> {userProfile.serialNum || "N/A"}</UserDetail>
+				<StyledH1>{userCustomProfile.username || "N/A"}</StyledH1>
+				<UserDetail><strong>Gender:</strong> {userCustomProfile.gender || "N/A"}</UserDetail>
+				<UserDetail><strong>Location:</strong> {userCustomProfile.location || "N/A"}</UserDetail>
+				<UserDetail><strong>Bio:</strong> {userCustomProfile.bio || "N/A"}</UserDetail>
+				<UserDetail><strong>User ID:</strong> {userCustomProfile.serial_num || "N/A"}</UserDetail>
 			</UserInfo>
 		</PreviewContainer>
 	);

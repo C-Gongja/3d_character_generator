@@ -24,18 +24,27 @@ const FunctionBtn = styled.button`
 `;
 
 export default function UtilButtons() {
-	const { updateUserCustomProfile } = useCustomStore();
+	const { updateUserCustomProfile, userCustomProfile } = useCustomStore();
+
+	const handleRandom = () => {
+
+	}
 
 	const handleSave = () => {
 		console.log("click save");
+		console.log("userCustomProfile from save btn: ", userCustomProfile)
 		updateUserCustomProfile();
+	}
+
+	const handleReset = () => {
+
 	}
 
 	return (
 		<FunctionsContainer>
-			<FunctionBtn>Random</FunctionBtn>
+			<FunctionBtn onClick={handleRandom}>Random</FunctionBtn>
 			<FunctionBtn onClick={handleSave}>Save</FunctionBtn>
-			<FunctionBtn>Reset</FunctionBtn>
+			<FunctionBtn onClick={handleReset}>Reset</FunctionBtn>
 		</FunctionsContainer>
 	);
 }

@@ -5,6 +5,7 @@ export interface Store {
 	customization: Customization;
 	fetchCustoms: () => Promise<void>;
 	setCurrentCategory: (category: Category) => void;
+	setCustomization: (customization: Customization) => void;
 	changeAsset: (category: string, asset: Asset) => void;
 }
 
@@ -12,6 +13,7 @@ export interface Category {
 	id: number;
 	name: string;
 	position: number;
+	startingAssetId: number;
 	assets: Asset[];
 }
 
@@ -24,5 +26,5 @@ export interface Asset {
 }
 
 export interface Customization {
-	[name: string]: Asset;
+	[name: string]: Asset | null;
 }
