@@ -1,19 +1,22 @@
 import { useConfigStore } from "../../state-management/custom-store";
-import { useCustomStore, UserCustomProfile } from "../../state-management/userCustom-store";
-import { Asset } from "./custom-Interface";
+import { useCustomStore } from "../../state-management/userCustom-store";
+import { Asset } from "../../state-management/custom-Interface";
+import { UserCustomProfile } from "../../state-management/userCustom-Interface";
 
-const categorykeys = ['head', 'eyes', 'eyebrows', 'nose', 'mouth', 'ears', 'hair', 'top', 'bottom', 'shoes'];
 export default function CustomAssets() {
 	// const { currentCategory, changeAsset, customization } = useConfigStore();
 	const { currentCategory, changeAsset, customization } = useConfigStore();
 	const { updateField } = useCustomStore();
 
-	const handleAssetChange = (categoryName: string, asset: Asset) => {
-		changeAsset(categoryName, asset);
-		const key = categoryName.toLowerCase() as keyof UserCustomProfile;
-		if (categorykeys.includes(key)) {
-			updateField(key, asset.id);
+	const handleAssetChange = async (categoryName: string, asset: Asset) => {
+		await changeAsset(categoryName, asset);
+		const key = categoryName as keyof UserCustomProfile;
+		const updatedCustomization = useConfigStore.getState().customization;
+		let assetId = null;
+		if (updatedCustomization[categoryName]?.id) {
+			assetId = asset.id;
 		}
+		await updateField(key, assetId);
 	};
 
 	return (

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { fetchAssets, fetchCategories } from "../api/custom/customApi.ts";
-import { Asset, Category, Customization, Store } from "../components/custom-components/custom-Interface";
+import { Asset, Category, Customization, Store } from "./custom-Interface.ts";
 
 const REQUIRED_CATEGORIES = ["Head", "Eyes", "Nose", "Top", "Bottom"];
 
@@ -40,6 +40,8 @@ export const useConfigStore = create<Store>((set) => ({
 		{
 			// stored asset
 			const currentAsset = state.customization[category];
+			console.log("curAsset: ", currentAsset);
+			console.log("asset: ", asset);
 
 			// 필수 카테고리이고, 같은 걸 클릭해서 지우려고 하면 막기
 			const isRequiredCategory = REQUIRED_CATEGORIES.includes(category);
@@ -47,7 +49,7 @@ export const useConfigStore = create<Store>((set) => ({
 			if (isRequiredCategory && currentAsset && currentAsset.id === asset.id) {
 				return {};
 			} else if (currentAsset && currentAsset.id === asset.id) {
-				// if current asset is the same as the one being set, don't change it
+				console.log("set to null: ", state.customization);
 				return {
 					customization: {
 						...state.customization,

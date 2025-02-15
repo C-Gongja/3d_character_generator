@@ -20,16 +20,16 @@ const Wrapper = styled.div`
 function CustomPage() {
 	// const { categories, currentCategories, fetchCustoms, setCurrentCategory } = useConfigStore();
 	const { fetchCustoms } = useConfigStore();
-	const { loadUserCustomProfile } = useCustomStore();
+	const { fetchUserCustoms } = useCustomStore();
 
 	useEffect(() => {
 		const loadData = async () => {
 			await fetchCustoms();
-			await loadUserCustomProfile();
+			await fetchUserCustoms();
 		};
 
 		loadData();
-	}, [fetchCustoms, loadUserCustomProfile]);
+	}, [fetchCustoms, fetchUserCustoms]);
 
 	return (
 		<Wrapper>

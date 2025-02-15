@@ -1,48 +1,10 @@
 import { create } from 'zustand';
 import { useConfigStore } from './custom-store';
 import { fetchUserCustomUpdate, fetchUserCustom } from '../api/user/userCustomApi';
-import { Customization } from '../components/custom-components/custom-Interface';
-
-export interface UserProfile {
-	username: string;
-}
-
-export interface UserCustomProfile {
-	username: string;
-	gender: string | null;
-	location: string | null;
-	bio: string | null;
-	serial_num: string | null;
-	birthday: string | null;
-	head: number | null;
-	eyes: number | null;
-	eyebrows: number | null;
-	nose: number | null;
-	mouth: number | null;
-	ears: number | null;
-	hair: number | null;
-	top: number | null;
-	bottom: number | null;
-	shoes: number | null;
-}
-
-interface UserStore {
-	userProfile: UserProfile;
-	userCustomProfile: UserCustomProfile;
-	changedFields: Partial<UserCustomProfile>;
-	setUserProfile: (profile: UserProfile) => void;
-	setUserCustomProfile: (customProfile: UserCustomProfile) => void;
-	loadUserCustomProfile: () => Promise<void>;
-	updateField: (key: keyof UserCustomProfile, value: string | number) => void;
-	updateUserCustomProfile: () => Promise<void>;
-}
+import UserStore, { UserCustomProfile } from './userCustom-Interface';
 
 // 유저 프로필 상태를 관리하는 Zustand store
 export const useCustomStore = create<UserStore>((set, get) => ({
-	userProfile: {
-		username: '',
-	},
-
 	userCustomProfile: {
 		username: '',
 		gender: '',
@@ -64,10 +26,11 @@ export const useCustomStore = create<UserStore>((set, get) => ({
 
 	changedFields: {},
 
-	setUserProfile: (profile) => set({ userProfile: profile }),
+	// setUserProfile: (profile) => set({ userProfile: profile }),
 	setUserCustomProfile: (customProfile) => set({ userCustomProfile: customProfile }),
 
-	loadUserCustomProfile: async () => {
+	fetchUserCustoms: async () => {
+		// Step 1: Update userCustomProfile in the userCustom-store
 		const userData = await fetchUserCustom();
 
 		if (userData) {
@@ -76,42 +39,44 @@ export const useCustomStore = create<UserStore>((set, get) => ({
 				...userData.userCustom, // userCustom 안의 내용 펼치기
 			};
 
-			// Step 1: Update userCustomProfile in the userCustom-store
-			set({ userCustomProfile: userCustomData });
-
-			// Step 2: Update customization in the custom-store using `useConfigStore`
-			const { customization, assets } = useConfigStore.getState();  // Accessing setCustomization from custom-store
-			const updatedCustomization = { ...customization }; // Copy existing customization state
-
-			// Setting the assets from userCustomData to customization
-			const categoryKeys = [
-				'head', 'eyes', 'eyebrows', 'nose', 'mouth',
-				'ears', 'hair', 'top', 'bottom', 'shoes',
-			] as const;
-
-			console.log("assets: ", assets);
-			console.log("customization: ", customization);
-			console.log(userCustomData);
-
-			categoryKeys.forEach((key) => {
-				if (userCustomData[key] !== null && userCustomData[key] !== -1) {
-					console.log("key: ", key);
-					console.log("userCustomData[key]: ", userCustomData[key]);
-					const foundAsset = assets.find((asset) => asset.id === userCustomData[key]);
-					if (foundAsset) {
-						console.log("foundAsset: ", foundAsset);
-						updatedCustomization[key] = foundAsset;
-						// Step 3: Update customization directly in custom-store using setCustomization
-						useConfigStore.getState().setCustomization(updatedCustomization);
-					}
+			//여기에 만약에 customization[key].id 가 -1이지 않고 userCustomData null이면 추가
+			//1.if userCustomData[category key name] === null && category.id != -1, userCustomData[category key name] = category.id
+			const { customization } = useConfigStore.getState();
+			Object.entries(customization).forEach(([key, category]) => {
+				if (category && category.id !== -1 && userCustomData[key as keyof UserCustomProfile] === null) {
+					userCustomData[key as keyof UserCustomProfile] = category.id;
 				}
 			});
+
+			console.log("fetchUserCustom userCustomData: ", userCustomData);
+
+			// Step 1: Update userCustomProfile in the userCustom-store
+			set({ userCustomProfile: userCustomData });
+			await get().loadUserCustomProfile();
 		}
+	},
+
+	loadUserCustomProfile: async () => {
+		// Step 2: Update customization in the custom-store using `useConfigStore`
+		const { userCustomProfile } = useCustomStore.getState();
+		const { customization, categories, assets } = useConfigStore.getState();  // Accessing setCustomization from custom-store
+		const updatedCustomization = { ...customization }; // Copy existing customization state
+
+		categories.forEach((category) => {
+			const categoryName = category.name as keyof UserCustomProfile;
+			if (userCustomProfile[categoryName] !== null && userCustomProfile[categoryName] !== -1) {
+				const foundAsset = assets.find((asset) => asset.id === userCustomProfile[categoryName]);
+				if (foundAsset) {
+					updatedCustomization[category.name] = foundAsset;
+					// Step 3: Update customization directly in custom-store using setCustomization
+					useConfigStore.getState().setCustomization(updatedCustomization);
+				}
+			}
+		});
 	},
 
 	updateField: (key, value) =>
 		set((state) => ({
-			userCustomProfile: { ...state.userCustomProfile, [key]: value },
 			changedFields: { ...state.changedFields, [key]: value },
 		})),
 
@@ -123,7 +88,7 @@ export const useCustomStore = create<UserStore>((set, get) => ({
 			return;
 		}
 
-		console.log("updating data: ", updatedFields);
+		console.log("updating data: ", JSON.stringify(updatedFields));
 		const success = await fetchUserCustomUpdate(updatedFields);
 
 		if (success) {
@@ -132,5 +97,27 @@ export const useCustomStore = create<UserStore>((set, get) => ({
 		} else {
 			console.error("Failed to update user profile");
 		}
+	},
+
+	resetUserCustomProfile: async () => {
+		const { userCustomProfile } = useCustomStore.getState();
+		const { customization, categories, assets } = useConfigStore.getState();  // Accessing setCustomization from custom-store
+		const updatedCustomization = { ...customization }; // Copy existing customization state
+
+		categories.forEach((category) => {
+			const categoryName = category.name as keyof UserCustomProfile;
+			if (userCustomProfile[categoryName] !== null && userCustomProfile[categoryName] !== -1) {
+				const foundAsset = assets.find((asset) => asset.id === userCustomProfile[categoryName]);
+				if (foundAsset) {
+					updatedCustomization[category.name] = foundAsset;
+				}
+			}
+			else {
+				updatedCustomization[category.name] = null;
+			}
+		});
+
+		// Update the customization state in the store
+		useConfigStore.getState().setCustomization(updatedCustomization);
 	},
 }));
