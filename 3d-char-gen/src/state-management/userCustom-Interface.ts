@@ -9,16 +9,16 @@ export interface UserCustomProfile {
 	bio: string | null;
 	serial_num: string | null;
 	birthday: string | null;
-	head: number | null;
-	eyes: number | null;
-	eyebrows: number | null;
-	nose: number | null;
-	mouth: number | null;
-	ears: number | null;
-	hair: number | null;
-	top: number | null;
-	bottom: number | null;
-	shoes: number | null;
+	Head: number | null;
+	Eyes: number | null;
+	Eyebrows: number | null;
+	Nose: number | null;
+	Mouth: number | null;
+	Ears: number | null;
+	Hair: number | null;
+	Top: number | null;
+	Bottom: number | null;
+	Shoes: number | null;
 }
 
 export default interface UserStore {

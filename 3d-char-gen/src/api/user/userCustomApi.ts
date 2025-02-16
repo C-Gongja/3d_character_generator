@@ -1,7 +1,29 @@
 import { apiClient } from "./apiClient";
-import { UserCustomProfile } from "../../state-management/userCustom-store";
+import { UserCustomProfile } from "../../state-management/userCustom-Interface";
 
 const CUSTOM_BASE_URL = "http://localhost:5001/api/usercustom";
+
+export const fetchUserCustomCreate = async (newProfile: Partial<UserCustomProfile>): Promise<boolean> => {
+	const user = JSON.parse(localStorage.getItem("user-storage") || "{}");
+	const userId = user?.state?.user?.id;
+
+	if (!userId) {
+		console.error("User ID not found");
+		return false;
+	}
+
+	try {
+		await apiClient(`${CUSTOM_BASE_URL}/${userId}`, {
+			method: "POST",
+			body: JSON.stringify(newProfile),
+		});
+
+		return true;
+	} catch (error) {
+		console.error("Error updating user profile:", error);
+		return false;
+	}
+};
 
 export const fetchUserCustom = async (): Promise<UserCustomProfile | null> => {
 	const user = JSON.parse(localStorage.getItem("user-storage") || "{}");

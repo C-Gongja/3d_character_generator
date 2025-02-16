@@ -1,27 +1,27 @@
 import { create } from 'zustand';
 import { useConfigStore } from './custom-store';
-import { fetchUserCustomUpdate, fetchUserCustom } from '../api/user/userCustomApi';
+import { fetchUserCustomUpdate, fetchUserCustom, fetchUserCustomCreate } from '../api/user/userCustomApi';
 import UserStore, { UserCustomProfile } from './userCustom-Interface';
 
 // 유저 프로필 상태를 관리하는 Zustand store
 export const useCustomStore = create<UserStore>((set, get) => ({
 	userCustomProfile: {
 		username: '',
-		gender: '',
-		location: '',
-		bio: '',
-		serial_num: '',
-		birthday: '',
-		head: -1,
-		eyes: -1,
-		eyebrows: -1,
-		nose: -1,
-		mouth: -1,
-		ears: -1,
-		hair: -1,
-		top: -1,
-		bottom: -1,
-		shoes: -1,
+		gender: null,
+		location: null,
+		bio: null,
+		serial_num: null,
+		birthday: null,
+		Head: null,
+		Eyes: null,
+		Eyebrows: null,
+		Nose: null,
+		Mouth: null,
+		Ears: null,
+		Hair: null,
+		Top: null,
+		Bottom: null,
+		Shoes: null,
 	},
 
 	changedFields: {},
@@ -48,11 +48,35 @@ export const useCustomStore = create<UserStore>((set, get) => ({
 				}
 			});
 
-			console.log("fetchUserCustom userCustomData: ", userCustomData);
-
 			// Step 1: Update userCustomProfile in the userCustom-store
 			set({ userCustomProfile: userCustomData });
+			console.log(userCustomData)
 			await get().loadUserCustomProfile();
+		}
+		else {
+			// 새로운 userCustomData 생성 및 기본 assets 설정
+			const { userCustomProfile } = useCustomStore.getState();
+			const user = JSON.parse(localStorage.getItem("user-storage") || "{}");
+			const userName = user?.state?.user?.name || "";
+
+			const newUserCustomData = { ...userCustomProfile, username: userName };
+
+			// 카테고리마다 기본 아이템 설정
+			const { customization } = useConfigStore.getState();
+			Object.entries(customization).forEach(([key, category]) => {
+				if (category && category.id !== -1 && newUserCustomData[key as keyof UserCustomProfile] === null) {
+					newUserCustomData[key as keyof UserCustomProfile] = category.id;
+				}
+			});
+
+			console.log("새로운 userCustomData 생성: ", newUserCustomData);
+
+			// 서버에 새로 생성 요청
+			const success = await fetchUserCustomCreate(newUserCustomData);
+			if (success) {
+				set({ userCustomProfile: newUserCustomData });
+				await get().loadUserCustomProfile();
+			}
 		}
 	},
 
