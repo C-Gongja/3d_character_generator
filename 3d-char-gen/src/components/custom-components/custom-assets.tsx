@@ -20,7 +20,7 @@ export default function CustomAssets() {
 	};
 
 	return (
-		<div className="flex gap-5 flex-wrap p-5 min-h-100">
+		<div className="flex gap-5 flex-wrap p-5 min-h-100 max-h-100 overflow-y-scroll">
 			{currentCategory?.assets.map((asset, index) => (
 				<button
 					key={index}

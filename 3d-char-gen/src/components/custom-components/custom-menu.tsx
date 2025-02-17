@@ -8,6 +8,7 @@ const CustomContainer = styled.div`
 	flex-direction: column;
 	padding: 20px;
 	border: 1px solid white;
+	gap: 20px;
 `;
 export default function CustomMenu() {
 	// const { fetchCustoms } = useConfigStore();

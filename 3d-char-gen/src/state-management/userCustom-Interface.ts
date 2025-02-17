@@ -2,6 +2,11 @@ export interface UserProfile {
 	username: string;
 }
 
+export interface UserCustomResponse {
+	username: string;
+	userCustom: UserCustomProfile;
+}
+
 export interface UserCustomProfile {
 	username: string;
 	gender: string | null;

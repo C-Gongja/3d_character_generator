@@ -30,38 +30,34 @@ export const useCustomStore = create<UserStore>((set, get) => ({
 	setUserCustomProfile: (customProfile) => set({ userCustomProfile: customProfile }),
 
 	fetchUserCustoms: async () => {
-		// Step 1: Update userCustomProfile in the userCustom-store
 		const userData = await fetchUserCustom();
-
 		if (userData) {
 			const userCustomData = {
 				username: userData.username,
-				...userData.userCustom, // userCustom 안의 내용 펼치기
+				...userData.userCustom, //need to figure out how to set this type.
 			};
 
-			//여기에 만약에 customization[key].id 가 -1이지 않고 userCustomData null이면 추가
-			//1.if userCustomData[category key name] === null && category.id != -1, userCustomData[category key name] = category.id
-			const { customization } = useConfigStore.getState();
-			Object.entries(customization).forEach(([key, category]) => {
-				if (category && category.id !== -1 && userCustomData[key as keyof UserCustomProfile] === null) {
-					userCustomData[key as keyof UserCustomProfile] = category.id;
-				}
-			});
+			//copy default settings to userCustomData
+			// const { customization } = useConfigStore.getState();
+			// Object.entries(customization).forEach(([key, category]) => {
+			// 	if (category && category.id !== -1 && userCustomData[key as keyof UserCustomProfile] === null) {
+			// 		userCustomData[key as keyof UserCustomProfile] = category.id;
+			// 	}
+			// });
 
 			// Step 1: Update userCustomProfile in the userCustom-store
 			set({ userCustomProfile: userCustomData });
-			console.log(userCustomData)
 			await get().loadUserCustomProfile();
 		}
 		else {
-			// 새로운 userCustomData 생성 및 기본 assets 설정
+			// new userCustomProfile
 			const { userCustomProfile } = useCustomStore.getState();
 			const user = JSON.parse(localStorage.getItem("user-storage") || "{}");
 			const userName = user?.state?.user?.name || "";
 
 			const newUserCustomData = { ...userCustomProfile, username: userName };
 
-			// 카테고리마다 기본 아이템 설정
+			// setting default setting
 			const { customization } = useConfigStore.getState();
 			Object.entries(customization).forEach(([key, category]) => {
 				if (category && category.id !== -1 && newUserCustomData[key as keyof UserCustomProfile] === null) {
@@ -69,9 +65,6 @@ export const useCustomStore = create<UserStore>((set, get) => ({
 				}
 			});
 
-			console.log("새로운 userCustomData 생성: ", newUserCustomData);
-
-			// 서버에 새로 생성 요청
 			const success = await fetchUserCustomCreate(newUserCustomData);
 			if (success) {
 				set({ userCustomProfile: newUserCustomData });

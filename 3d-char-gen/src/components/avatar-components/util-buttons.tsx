@@ -1,7 +1,6 @@
-import React, { } from "react";
+import { } from "react";
 import styled from "styled-components";
 import { useCustomStore } from "../../state-management/userCustom-store";
-import { useConfigStore } from "../../state-management/custom-store";
 
 const FunctionsContainer = styled.div`
 	border: 1px solid white;
