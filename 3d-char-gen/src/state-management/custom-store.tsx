@@ -1,14 +1,19 @@
 import { create } from "zustand";
 import { fetchAssets, fetchCategories } from "../api/custom/customApi.ts";
 import { Asset, Category, Customization, Store } from "./custom-Interface.ts";
+import { MeshStandardMaterial } from "three";
 
 const REQUIRED_CATEGORIES = ["Head", "Eyes", "Nose", "Top", "Bottom"];
 
-export const useConfigStore = create<Store>((set) => ({
+export const useConfigStore = create<Store>((set, get) => ({
 	categories: [],
 	currentCategory: null,
 	assets: [],
+	skin: new MeshStandardMaterial({ color: 0xf5c6a5, roughness: 1 }),
 	customization: {},
+	updateSkin: (color: any) => {
+		get().skin.color.set(color);
+	},
 	fetchCustoms: async () => {
 		try {
 			const categories = await fetchCategories();

@@ -1,4 +1,5 @@
 export interface Store {
+	skin: any;
 	categories: Category[];
 	currentCategory: Category | null;
 	assets: Asset[];

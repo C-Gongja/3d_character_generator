@@ -1,41 +1,18 @@
-import styled from "styled-components";
-
-const Options = styled.div`
-	border: 1px solid white;
-	padding: 10px;
-	display: flex;
-`;
-
-const ColorItem = styled.div`
-	padding: 5px 10px;
-	border: 1px solid white;
-	border-radius: 5px;
-	background-color: #333;
-	color: white;
-	margin: 5px;
-	cursor: pointer;
-
-	&:hover {
-		background-color: #555;
-	}
-`;
+import { Saturation, Hue, useColor } from "react-color-palette";
+import "react-color-palette/css";
 
 export default function ColorOptions() {
-	// 탭 ID를 기반으로 키를 매핑
-	const tabKeys = [
-		"FaceColor",
-		"EyesColor",
-		"NoseColor",
-		"MouthColor",
-		"EarColor",
-		"ClothesColor",
-		"PantsColor",
-		"ShoesColor",
-	] as const;
+	const [color, setColor] = useColor("rgb(86 30 203)");
 
 	return (
-		<Options>
-			<h1>Color Options</h1>
-		</Options>
+		<div className="w-full border border-red-500 grid grid-cols-2 grid-rows-1 p-4 gap-4">
+			<div className="flex flex-col gap-2 ">
+				<Saturation height={180} color={color} onChange={setColor} />
+				<Hue color={color} onChange={setColor} />
+			</div>
+			<div className="p-4 text-white">
+				color options
+			</div>
+		</div>
 	);
 }

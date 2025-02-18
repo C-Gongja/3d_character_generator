@@ -7,6 +7,11 @@ export interface UserCustomResponse {
 	userCustom: UserCustomProfile;
 }
 
+interface CustomField {
+	asset_id: number | null;
+	color: string | null;
+}
+
 export interface UserCustomProfile {
 	username: string;
 	gender: string | null;
@@ -14,16 +19,16 @@ export interface UserCustomProfile {
 	bio: string | null;
 	serial_num: string | null;
 	birthday: string | null;
-	Head: number | null;
-	Eyes: number | null;
-	Eyebrows: number | null;
-	Nose: number | null;
-	Mouth: number | null;
-	Ears: number | null;
-	Hair: number | null;
-	Top: number | null;
-	Bottom: number | null;
-	Shoes: number | null;
+	Head: CustomField | null;
+	Eyes: CustomField | null;
+	Eyebrows: CustomField | null;
+	Nose: CustomField | null;
+	Mouth: CustomField | null;
+	Ears: CustomField | null;
+	Hair: CustomField | null;
+	Top: CustomField | null;
+	Bottom: CustomField | null;
+	Shoes: CustomField | null;
 }
 
 export default interface UserStore {

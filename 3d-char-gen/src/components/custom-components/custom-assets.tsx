@@ -16,11 +16,11 @@ export default function CustomAssets() {
 		if (updatedCustomization[categoryName]?.id) {
 			assetId = asset.id;
 		}
-		await updateField(key, assetId);
+		await updateField(key, { asset_id: assetId, color: "#ffff" });
 	};
 
 	return (
-		<div className="flex gap-5 flex-wrap p-5 min-h-100 max-h-100 overflow-y-scroll">
+		<div className="flex gap-5 flex-wrap p-5 min-h-50 max-h-100 overflow-y-scroll">
 			{currentCategory?.assets.map((asset, index) => (
 				<button
 					key={index}

@@ -1,6 +1,7 @@
 import React, { } from "react";
 import styled from "styled-components";
-import { useCustomStore, UserCustomProfile } from "../../state-management/userCustom-store";
+import { useCustomStore } from "../../state-management/userCustom-store";
+import { UserCustomProfile } from "../../state-management/userCustom-Interface";
 
 const IDCustomContainer = styled.div`
   padding: 20px;
@@ -16,7 +17,6 @@ const CustomInput = styled.textarea`
   border: 1px solid white;
 	font-size: 20px;
 `;
-
 
 export default function IDCustom() {
 	const { userCustomProfile, updateField } = useCustomStore();
