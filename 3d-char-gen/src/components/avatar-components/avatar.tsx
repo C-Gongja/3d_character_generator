@@ -19,6 +19,7 @@ export const Avatar = ({ ...props }: JSX.IntrinsicElements["group"]) => {
 							customization[key]?.url && (
 								<Suspense key={customization[key].id}>
 									<Asset
+										categoryName={key}
 										url={customization[key].url}
 										skeleton={nodes.Plane.skeleton}
 									/>

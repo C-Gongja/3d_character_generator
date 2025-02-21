@@ -1,10 +1,10 @@
-import React from "react";
+import { } from "react";
 
 const socialIcons = [
-	{ src: "/icons/logo/google-icon.svg", alt: "Google" },
-	{ src: "/icons/logo/facebook-icon.svg", alt: "Facebook" },
-	{ src: "/icons/logo/microsoft-icon.svg", alt: "Microsoft" },
-	{ src: "/icons/logo/Apple_logo_black.svg", alt: "Apple" },
+	{ src: "/icons/social_logo/google-icon.svg", alt: "Google" },
+	{ src: "/icons/social_logo/facebook-icon.svg", alt: "Facebook" },
+	{ src: "/icons/social_logo/microsoft-icon.svg", alt: "Microsoft" },
+	{ src: "/icons/social_logo/Apple_logo_black.svg", alt: "Apple" },
 ];
 
 export default function ExternalAuthButtons() {

@@ -1,41 +1,5 @@
-import React, { } from 'react';
-import styled from 'styled-components';
+import { } from 'react';
 import { useConfigStore } from '../../state-management/custom-store';
-
-const TabContainer = styled.div`
-  border: 1px solid white;
-  height: auto;
-  display: flex;
-  justify-content: flex-start;
-  align-items: start;
-	flex-wrap: wrap; /* 탭이 많아지면 자동으로 줄 바꿈 */
-`;
-
-const TabItem = styled.div<TabItemProps>`
-  padding: 10px 20px;
-	font-size: 18px;
-	/* border: 0.5px solid white; */
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  ${(props) =>
-		props.active
-			? `
-      background-color: indigo;
-      color: white;
-      font-weight: bold;
-    `
-			: `
-      &:hover {
-        background-color: #f0f0f0;
-				color:black;
-      }
-    `}
-`;
-
-interface TabItemProps {
-	active: boolean;
-}
 
 export default function CustomTab() {
 	const { categories, currentCategory, setCurrentCategory } = useConfigStore();
@@ -50,16 +14,20 @@ export default function CustomTab() {
 	};
 
 	return (
-		<TabContainer>
+		<div className="rounded-lg flex justify-start items-start flex-wrap">
 			{categories.map((category) => (
-				<TabItem
+				<div
 					key={category.id}
-					active={category.id === currentCategory?.id}
+					className={`px-5 py-2 text-lg cursor-pointer transition-colors duration-300 ease-in-out 
+						${category.id === currentCategory?.id
+							? 'bg-indigo-600 text-white font-bold rounded-lg'
+							: 'hover:bg-gray-200 hover:text-black rounded-lg'
+						}`}
 					onClick={() => handleTabClick(category.id)}
 				>
 					{category.name}
-				</TabItem>
+				</div>
 			))}
-		</TabContainer>
+		</div>
 	);
 }

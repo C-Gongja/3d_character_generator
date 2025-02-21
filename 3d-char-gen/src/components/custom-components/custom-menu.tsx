@@ -1,15 +1,7 @@
 import CustomTab from "./custom-tab";
-import styled from "styled-components";
 import CustomAssets from "./custom-assets";
 import ColorOptions from "./color-options";
 
-const CustomContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	padding: 20px;
-	border: 1px solid white;
-	gap: 20px;
-`;
 export default function CustomMenu() {
 	// const { fetchCustoms } = useConfigStore();
 
@@ -18,10 +10,10 @@ export default function CustomMenu() {
 	// }, []);
 
 	return (
-		<CustomContainer>
+		<div className="flex flex-col p-[20px] gap-[20px]">
 			<CustomTab />
 			<CustomAssets />
 			<ColorOptions />
-		</CustomContainer>
+		</div>
 	);
 }

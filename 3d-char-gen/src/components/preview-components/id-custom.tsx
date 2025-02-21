@@ -1,22 +1,6 @@
-import React, { } from "react";
-import styled from "styled-components";
+import React from "react";
 import { useCustomStore } from "../../state-management/userCustom-store";
 import { UserCustomProfile } from "../../state-management/userCustom-Interface";
-
-const IDCustomContainer = styled.div`
-  padding: 20px;
-  border: 1px solid white;
-  height: auto;
-`;
-
-const CustomInput = styled.textarea`
-  width: 100%;
-  height: 50px;
-  padding: 10px;
-  background-color: black;
-  border: 1px solid white;
-	font-size: 20px;
-`;
 
 export default function IDCustom() {
 	const { userCustomProfile, updateField } = useCustomStore();
@@ -36,19 +20,20 @@ export default function IDCustom() {
 	];
 
 	return (
-		<IDCustomContainer>
+		<div className="py-5 h-auto border-t-1 border-white">
 			{fields.map((field) => (
-				<div key={field.id}>
-					<h2>{field.id}</h2>
-					<CustomInput
+				<div key={field.id} className="mb-1">
+					<h2 className="text-lg font-semibold">{field.id}</h2>
+					<textarea
 						name={field.id}
 						placeholder={field.label}
 						maxLength={maxLength + 1}
-						value={userCustomProfile[field.id as keyof UserCustomProfile]}
+						value={field.label}
 						onChange={handleChange}
+						className="w-full h-[45px] p-2 bg-black text-white border border-white rounded-lg flex justify-center text-xl"
 					/>
 				</div>
 			))}
-		</IDCustomContainer>
+		</div>
 	);
 }

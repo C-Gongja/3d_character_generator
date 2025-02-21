@@ -1,9 +1,12 @@
 export interface Store {
+	isLoading: boolean;
 	skin: any;
 	categories: Category[];
 	currentCategory: Category | null;
 	assets: Asset[];
 	customization: Customization;
+	updateColor: (color: any) => void;
+	updateSkin: (color: any) => void;
 	fetchCustoms: () => Promise<void>;
 	setCurrentCategory: (category: Category) => void;
 	setCustomization: (customization: Customization) => void;
@@ -15,6 +18,7 @@ export interface Category {
 	name: string;
 	position: number;
 	startingAssetId: number;
+	color_options: string[];
 	assets: Asset[];
 }
 
@@ -24,6 +28,7 @@ export interface Asset {
 	thumbnail: string;
 	url: string;
 	groupid: number;
+	color: string;
 }
 
 export interface Customization {

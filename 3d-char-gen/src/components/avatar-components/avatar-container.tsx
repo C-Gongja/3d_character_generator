@@ -1,20 +1,14 @@
-import React from "react";
-import styled from "styled-components";
+import { } from "react";
 import UtilButtons from "./util-buttons";
 import AvatarScene from "./avatar-scene";
 
 
-const MiddleColumn = styled.div`
-	display: flex;
-	flex-direction: column;
-`;
-
 export default function AvatarContainer() {
 
 	return (
-		<MiddleColumn>
+		<div className="grid grid-cols-1 grid-rows-2 gap-4 ">
 			<AvatarScene />
 			<UtilButtons />
-		</MiddleColumn>
+		</div>
 	);
 }

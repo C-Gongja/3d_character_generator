@@ -1,48 +1,41 @@
 import { } from "react";
-import styled from "styled-components";
 import { useCustomStore } from "../../state-management/userCustom-store";
-
-const FunctionsContainer = styled.div`
-	border: 1px solid white;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 15px;
-`;
-
-const FunctionBtn = styled.button`
-	border: 1px solid white;
-	height: 50px;
-	width: 50%;
-	border-radius: 20px;
-	font-size: 25px;
-	cursor: pointer;
-
-	&:hover{
-		background-color: gray;
-	}
-`;
 
 export default function UtilButtons() {
 	const { updateUserCustomProfile, resetUserCustomProfile } = useCustomStore();
 
 	const handleRandom = () => {
-
-	}
+		// 랜덤 함수 구현 필요
+	};
 
 	const handleSave = () => {
 		updateUserCustomProfile();
-	}
+	};
 
 	const handleReset = () => {
 		resetUserCustomProfile();
-	}
+	};
 
 	return (
-		<FunctionsContainer>
-			<FunctionBtn onClick={handleRandom}>Random</FunctionBtn>
-			<FunctionBtn onClick={handleSave}>Save</FunctionBtn>
-			<FunctionBtn onClick={handleReset}>Reset</FunctionBtn>
-		</FunctionsContainer>
+		<div className="flex flex-col items-center gap-4 p-4 row-start-3">
+			<button
+				onClick={handleRandom}
+				className="border border-white h-10 w-1/2 rounded-2xl text-xl cursor-pointer hover:bg-gray-500 transition"
+			>
+				Random
+			</button>
+			<button
+				onClick={handleSave}
+				className="border border-white h-10 w-1/2 rounded-2xl text-xl cursor-pointer hover:bg-gray-500 transition"
+			>
+				Save
+			</button>
+			<button
+				onClick={handleReset}
+				className="border border-white h-10 w-1/2 rounded-2xl text-xl cursor-pointer hover:bg-gray-500 transition"
+			>
+				Reset
+			</button>
+		</div>
 	);
 }
