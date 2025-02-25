@@ -3,9 +3,7 @@ import { UserCustomProfile } from "../../state-management/userCustom-Interface";
 
 const CUSTOM_BASE_URL = "http://localhost:5001/api/usercustom";
 
-export const fetchUserCustomCreate = async (newProfile: Partial<UserCustomProfile>): Promise<boolean> => {
-	const user = JSON.parse(localStorage.getItem("user-storage") || "{}");
-	const userId = user?.state?.user?.id;
+export const fetchUserCustomCreate = async ({ userId, newProfile }: { userId: number, newProfile: Partial<UserCustomProfile> }): Promise<boolean> => {
 
 	if (!userId) {
 		console.error("User ID not found");
@@ -25,17 +23,15 @@ export const fetchUserCustomCreate = async (newProfile: Partial<UserCustomProfil
 	}
 };
 
-export const fetchUserCustom = async (): Promise<UserCustomProfile | null> => {
-	const user = JSON.parse(localStorage.getItem("user-storage") || "{}");
-	const userId = user?.state?.user?.id;
+export const fetchUserCustom = async (id: number): Promise<UserCustomProfile | null> => {
 
-	if (!userId) {
+	if (!id) {
 		console.error("User ID not found");
 		return null;
 	}
 
 	try {
-		const data = await apiClient(`${CUSTOM_BASE_URL}/${userId}`, { method: "GET" });
+		const data = await apiClient(`${CUSTOM_BASE_URL}/${id}`, { method: "GET" });
 		return data.data;
 	} catch (error) {
 		console.error("Error fetching user custom profile:", error);
@@ -43,10 +39,8 @@ export const fetchUserCustom = async (): Promise<UserCustomProfile | null> => {
 	}
 };
 
-export const fetchUserCustomUpdate = async (updatedProfile: Partial<UserCustomProfile>): Promise<boolean> => {
-	const user = JSON.parse(localStorage.getItem("user-storage") || "{}");
-	const userId = user?.state?.user?.id;
-
+export const fetchUserCustomUpdate = async ({ userId, updatedProfile }: { userId: number, updatedProfile: Partial<UserCustomProfile> }): Promise<boolean> => {
+	console.log("user Id", userId);
 	if (!userId) {
 		console.error("User ID not found");
 		return false;

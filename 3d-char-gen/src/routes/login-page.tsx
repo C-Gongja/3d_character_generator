@@ -40,7 +40,7 @@ export default function LogIn() {
 	return (
 		<div className="flex h-auto w-full items-center justify-center">
 			<div className="flex flex-col items-center w-[420px]">
-				<img src={""} alt="Logo" className="mb-8 h-[90px] cursor-pointer" onClick={() => navigate("/")} />
+				<img src={"/icons/page-logo/logo/logo-color.PNG"} alt="Logo" className="mb-8 h-[150px] cursor-pointer" onClick={() => navigate("/")} />
 				<h1 className="text-white text-4xl">Sign in</h1>
 				<form
 					onSubmit={onSubmit}
@@ -55,6 +55,7 @@ export default function LogIn() {
 					/>
 					<input
 						onChange={onChange}
+						type="password"
 						name="password"
 						value={formData.password}
 						placeholder="Password"

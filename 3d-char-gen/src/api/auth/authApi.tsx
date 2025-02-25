@@ -32,8 +32,8 @@ export const fetchLogin = (credentials: LoginFormData): Promise<any> => {
 		},
 		method: "POST",
 		body: JSON.stringify({
-			email: credentials.email, // Send username
-			password: credentials.password  // Send password
+			email: credentials.email,
+			password: credentials.password
 		}),
 		credentials: "include",
 	})

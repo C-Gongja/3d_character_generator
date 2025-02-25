@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import { useConfigStore } from './custom-store';
-import { fetchUserCustomUpdate, fetchUserCustom, fetchUserCustomCreate } from '../api/user/userCustomApi';
+import { fetchUserCustom, fetchUserCustomCreate, fetchUserCustomUpdate } from '../api/user/userCustomApi';
 import UserStore, { CustomField, UserCustomProfile } from './userCustom-Interface';
+import { useUserStore } from './user-store';
 
 // 유저 프로필 상태를 관리하는 Zustand store
 export const useCustomStore = create<UserStore>((set, get) => ({
@@ -34,7 +35,13 @@ export const useCustomStore = create<UserStore>((set, get) => ({
 
 	fetchUserCustoms: async () => {
 		set({ isLoading: true });
-		const userData = await fetchUserCustom();
+		const user = useUserStore.getState().user;
+		if (!user) {
+			set({ isLoading: false });
+			return;
+		}
+
+		const userData = await fetchUserCustom(user.id);
 		if (userData) {
 			const userCustomData = {
 				username: userData.username,
@@ -61,7 +68,7 @@ export const useCustomStore = create<UserStore>((set, get) => ({
 				}
 			});
 
-			const success = await fetchUserCustomCreate(newUserCustomData);
+			const success = await fetchUserCustomCreate({ userId: user.id, newProfile: newUserCustomData });
 			if (success) {
 				set({ userCustomProfile: newUserCustomData, initialUserCustomProfile: newUserCustomData });
 				await get().loadUserCustomProfile();
@@ -113,6 +120,11 @@ export const useCustomStore = create<UserStore>((set, get) => ({
 
 	updateUserCustomProfile: async () => {
 		const updatedFields = get().changedFields;
+		const user = useUserStore.getState().user;
+
+		if (!user) {
+			return;
+		}
 
 		if (Object.keys(updatedFields).length === 0) {
 			console.log("no changed fields");
@@ -120,7 +132,7 @@ export const useCustomStore = create<UserStore>((set, get) => ({
 		}
 
 		console.log("updating data: ", JSON.stringify(updatedFields));
-		const success = await fetchUserCustomUpdate(updatedFields);
+		const success = await fetchUserCustomUpdate({ userId: user.id, updatedProfile: updatedFields });
 
 		if (success) {
 			console.log("User profile updated successfully");
@@ -132,8 +144,8 @@ export const useCustomStore = create<UserStore>((set, get) => ({
 
 	resetUserCustomProfile: async () => {
 		const { userCustomProfile, initialUserCustomProfile } = useCustomStore.getState();
-
 		set({ userCustomProfile: initialUserCustomProfile });
 		await get().loadUserCustomProfile();
+		set({ changedFields: {} });
 	},
 }));

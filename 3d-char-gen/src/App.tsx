@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/layout";
-// import ProtectedRoute from "./components/protected-route";
 import LogIn from "./routes/login-page";
 import SignUp from "./routes/signup-page";
 import CustomPage from "./routes/custom-page";
 import Profile from "./routes/profile";
 import LoadingScreen from "./components/loading-screen";
+import ProtectedRoute from "./components/protected-route";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
-		// element: <ProtectedRoute><Layout /></ProtectedRoute>,
-		element: <Layout />,
+		element: <ProtectedRoute><Layout /></ProtectedRoute>,
 		children: [
 			{
 				path: "",

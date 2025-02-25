@@ -20,26 +20,29 @@ export default function ColorOptions() {
 	};
 
 	// 데이터가 모두 로드된 후 색상을 가져오기
+	// 여기 좀 이상하 로직이 엉켰음
 	useEffect(() => {
 		if (configLoading || userLoading) return; // 둘 중 하나라도 로딩 중이면 실행 X
 
 		if (currentCategory) {
 			const storedColorHex = userCustomProfile[currentCategory.name]?.color;
-			if (!storedColorHex) return;
+			// if (!storedColorHex) return;
+			if (storedColorHex) {
+				const storedColor = hexToIColor(storedColorHex);
 
-			const storedColor = hexToIColor(storedColorHex);
+				// 초기 설정 시에만 색상을 업데이트하고, updateField 호출 안 함
+				if (!isInitialized) {
+					setColor(storedColor);
+				}
+			};
 
-			// 초기 설정 시에만 색상을 업데이트하고, updateField 호출 안 함
-			if (!isInitialized) {
-				setColor(storedColor);
-				setIsInitialized(true); // 초기 설정 완료
-			}
 			// currentCategory 에 color_options가 저장이 안되면 colors가 없어서 색갈 options을 바꾸지 못함
 			if (currentCategory?.color_options) {
 				setColorOptions(currentCategory.color_options);
 			} else {
 				setColorOptions([]);
 			}
+			setIsInitialized(true); // 초기 설정 완료
 		}
 	}, [configLoading, userLoading, currentCategory, userCustomProfile]);
 

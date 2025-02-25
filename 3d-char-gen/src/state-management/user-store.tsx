@@ -1,9 +1,8 @@
-// src/store/userStore.ts
 import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { fetchVerifyUser } from '../api/user/userApi';
 
 interface User {
-	id: string;
+	id: number;
 	name: string;
 	role: string;
 }
@@ -14,28 +13,30 @@ interface UserState {
 	setToken: (token: string) => void;
 	setUser: (user: User | null) => void;
 	clearUser: () => void;
+	verifyUser: () => Promise<void>;
 }
 
-export const useUserStore = create<UserState>()(
-	persist(
-		(set) => ({
-			user: null,
-			accessToken: null,
-			setToken: (accessToken) => {
-				localStorage.setItem("accessToken", accessToken);
-			},
-			setUser: (user) => {
-				set({ user });
-			},
-			clearUser: () => {
-				set({ user: null });
-				set({ accessToken: null });
-				localStorage.removeItem("accessToken");
-			},
-		}),
-		{
-			name: 'user-storage', // localStorage 키
-			storage: createJSONStorage(() => localStorage),
+export const useUserStore = create<UserState>((set) => ({
+	user: null,
+	accessToken: localStorage.getItem('accessToken'), // Load initially
+
+	setToken: (accessToken) => {
+		localStorage.setItem('accessToken', accessToken);
+		set({ accessToken });
+	},
+	setUser: (user) => {
+		set({ user });
+	},
+	clearUser: () => {
+		set({ user: null, accessToken: null });
+		localStorage.removeItem('accessToken');
+	},
+	verifyUser: async () => {
+		const user = await fetchVerifyUser();
+		if (user) {
+			set({ user: user });
+		} else {
+			set({ user: null });
 		}
-	)
-);
+	},
+}));

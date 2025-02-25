@@ -4,6 +4,20 @@ import { UserProfile } from "../../state-management/userCustom-store";
 const BASE_URL = "http://localhost:5001/api/user";
 const CUSTOM_BASE_URL = "http://localhost:5001/api/usercustom";
 
+
+/**
+ * 유저 정보를 가져오는 API
+ */
+export const fetchVerifyUser = async (): Promise<UserProfile | null> => {
+	try {
+		const data = await apiClient(`${BASE_URL}`, { method: "GET" });
+		return data.data;
+	} catch (error) {
+		console.error("Error fetching user profile:", error);
+		return null;
+	}
+};
+
 /**
  * 유저 정보를 가져오는 API
  */

@@ -13,6 +13,7 @@ function classNames(...classes: string[]) {
 
 export default function Navbar() {
 	const { user, clearUser } = useUserStore();
+	console.log("user from navbar: ", user);
 	const navigate = useNavigate();
 
 	const handleSignOut = () => {
@@ -28,7 +29,7 @@ export default function Navbar() {
 					<div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 						<div className="flex shrink-0 items-center">
 							<img
-								alt="Your Company"
+								alt="Logo"
 								src="/icons/page-logo/logo/logo-color.PNG"
 								className="h-10 w-auto"
 							/>

@@ -1,13 +1,29 @@
+import { ReactNode, useEffect, useState } from 'react';
 import { Navigate } from "react-router-dom";
-import { fetchUserProfile } from "../api/user/userApi";
+import { useUserStore } from '../state-management/user-store';
 
+function ProtectedRoute({ children }: { children: ReactNode }) {
+	const { user, accessToken, verifyUser } = useUserStore();
+	const [isLoading, setIsLoading] = useState(true);
 
-export default async function ProtectedRoute({ children }: { children: React.ReactNode; }) {
-	const user = await fetchUserProfile();
-	if (user === null) {
+	useEffect(() => {
+		const checkUser = async () => {
+			if (accessToken && !user) {
+				await verifyUser();
+			}
+			setIsLoading(false);
+		};
+
+		checkUser();
+	}, [accessToken, user, verifyUser]);
+
+	if (isLoading) {
+		return <div>Loading...</div>; // 로딩 중 UI
+	}
+	if (!user) {
 		return <Navigate to="/login" />;
 	}
-	console.log("user from protected route: ", user);
-
 	return children;
 }
+
+export default ProtectedRoute;
