@@ -34,7 +34,7 @@ export const fetchUserProfile = async (): Promise<UserProfile | null> => {
 		const data = await apiClient(`${BASE_URL}/${userId}`, { method: "GET" });
 		return data.data;
 	} catch (error) {
-		console.error("Error fetching user profile:", error);
+		alert('Session expired. Please log in again.');
 		return null;
 	}
 };
