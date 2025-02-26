@@ -4,10 +4,6 @@ import { UserProfile } from "../../state-management/userCustom-store";
 const BASE_URL = "http://localhost:5001/api/user";
 const CUSTOM_BASE_URL = "http://localhost:5001/api/usercustom";
 
-
-/**
- * 유저 정보를 가져오는 API
- */
 export const fetchVerifyUser = async (): Promise<UserProfile | null> => {
 	try {
 		const data = await apiClient(`${BASE_URL}`, { method: "GET" });
@@ -18,9 +14,6 @@ export const fetchVerifyUser = async (): Promise<UserProfile | null> => {
 	}
 };
 
-/**
- * 유저 정보를 가져오는 API
- */
 export const fetchUserProfile = async (): Promise<UserProfile | null> => {
 	const user = JSON.parse(localStorage.getItem("user-storage") || "{}");
 	const userId = user?.state?.user?.id;
@@ -39,9 +32,6 @@ export const fetchUserProfile = async (): Promise<UserProfile | null> => {
 	}
 };
 
-/**
- * 유저 정보를 업데이트하는 API
- */
 export const fetchUserUpdate = async (updatedProfile: Partial<UserProfile>): Promise<boolean> => {
 	const user = JSON.parse(localStorage.getItem("user-storage") || "{}");
 	const userId = user?.state?.user?.id;

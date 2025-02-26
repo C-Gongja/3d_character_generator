@@ -27,11 +27,19 @@ export default function LogIn() {
 			setIsLoading(true);
 			const userInfo = await fetchLogin(formData);
 			setUser(userInfo.user);
-			setToken(userInfo.accessToken)
-
+			setToken(userInfo.accessToken);
 			navigate("/");
-		} catch (e) {
-			console.log(e);
+		} catch (e: any) {
+			const error = JSON.parse(e.message);
+			if (error.errorCode === "EMAIL_NOT_FOUND") {
+				setError(error.message);
+			} else if (error.errorCode === "INVALID_PASSWORD") {
+				setError(error.message);
+			} else if (error.errorCode === "MISSING_FIELDS") {
+				setError(error.message);
+			} else {
+				setError("Login failed. Please try again."); // 기본 에러 메시지
+			}
 		} finally {
 			setIsLoading(false);
 		}
@@ -46,6 +54,9 @@ export default function LogIn() {
 					onSubmit={onSubmit}
 					className="flex flex-col gap-5 w-full mt-14 mb-2"
 				>
+					{error && (
+						<span className="text-red-500 text-sm ml-7">{error}</span>
+					)}
 					<input
 						onChange={onChange}
 						name="email"
@@ -67,7 +78,6 @@ export default function LogIn() {
 						className="cursor-pointer bg-blue-500 text-white py-2 px-5 rounded-full transition-opacity hover:opacity-80"
 					/>
 				</form>
-				{error && <span className="font-semibold text-red-500">{error}</span>}
 				<p className="text-lg mt-5 text-center">
 					Don't have an account? &nbsp;
 					<Link to="/signup" className="text-blue-500">Create one</Link>

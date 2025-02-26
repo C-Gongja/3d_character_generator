@@ -47,7 +47,7 @@ function App() {
 
 	return (
 		<>
-			<div className="pt-20 flex w-full h-screen">
+			<div className="flex w-full h-screen">
 				{/* <GlobalStyles /> */}
 				{isLoading ? <LoadingScreen /> : <RouterProvider router={router} />}
 			</div >

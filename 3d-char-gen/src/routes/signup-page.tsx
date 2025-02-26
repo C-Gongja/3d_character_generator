@@ -14,8 +14,6 @@ export default function SignUp() {
 		username: "",
 		email: "",
 		password: "",
-		bio: "",
-		birthDate: ""
 	});
 	const { setUser, setToken } = useUserStore();
 
@@ -28,7 +26,7 @@ export default function SignUp() {
 		e.preventDefault();
 		setError("");
 
-		if (isLoading || !formData.name || !formData.email || !formData.password || !formData.birthDate) return;
+		if (isLoading || !formData.name || !formData.email || !formData.password) return;
 
 		try {
 			setIsLoading(true);
@@ -38,8 +36,13 @@ export default function SignUp() {
 			setToken(userInfo.accessToken)
 			navigate("/");
 
-		} catch (e) {
-			console.log(e);
+		} catch (e: any) {
+			const error = JSON.parse(e.message);
+			if (error.errorCode === "EMAIL_ALREADY_EXIST") {
+				setError(error.message);
+			} else {
+				setError("Sign up failed. Please try again."); // 기본 에러 메시지
+			}
 		} finally {
 			setIsLoading(false);
 		}
@@ -48,9 +51,12 @@ export default function SignUp() {
 	return (
 		<div className="flex h-screen w-full items-center justify-center">
 			<div className="flex flex-col items-center w-[420px]">
-				<img src={""} alt="Logo" className="mb-6 h-[90px]" />
+				<img src={"/icons/page-logo/logo/logo-color.PNG"} alt="Logo" className="mb-8 h-[150px] cursor-pointer" />
 				<h2 className="text-white text-4xl mb-4">Create your account</h2>
 				<form onSubmit={onSubmit} className="flex flex-col gap-2 w-full mt-8">
+					{error && (
+						<span className="text-red-500 text-sm ml-7">{error}</span>
+					)}
 					<input
 						onChange={onChange}
 						name="name"
@@ -58,7 +64,7 @@ export default function SignUp() {
 						placeholder="Name"
 						type="text"
 						required
-						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500 text-white"
+						className="px-5 py-2 rounded-full border border-gray-300 text-lg focus:ring-2 focus:ring-blue-500 text-white"
 					/>
 					<input
 						onChange={onChange}
@@ -88,29 +94,11 @@ export default function SignUp() {
 						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500 text-white"
 					/>
 					<input
-						onChange={onChange}
-						name="bio"
-						value={formData.bio}
-						placeholder="Bio (Optional)"
-						type="text"
-						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500 text-white"
-					/>
-					<input
-						onChange={onChange}
-						name="birthDate"
-						value={formData.birthDate}
-						placeholder="Date of Birth"
-						type="date"
-						required
-						className="px-5 py-2 rounded-full border border-gray-300 text-lg text-black focus:ring-2 focus:ring-blue-500 text-white"
-					/>
-					<input
 						type="submit"
 						value={isLoading ? "Loading..." : "Create Account"}
 						className="cursor-pointer bg-blue-500 text-white py-2 px-5 rounded-full transition-opacity hover:opacity-80"
 					/>
 				</form>
-				{error && <span className="font-semibold text-red-500 mt-2">{error}</span>}
 				<p className="text-lg mt-5 text-center">
 					Already have an account? &nbsp;
 					<Link to="/login" className="text-blue-500">Sign in</Link>

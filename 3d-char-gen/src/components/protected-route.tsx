@@ -23,7 +23,11 @@ function ProtectedRoute({ children }: { children: ReactNode }) {
 	if (!user) {
 		return <Navigate to="/login" />;
 	}
-	return children;
+	return (
+		<div className='pt-20'>
+			{children}
+		</div>
+	);
 }
 
 export default ProtectedRoute;

@@ -29,7 +29,6 @@ const apiClient = async (url: string, options: RequestInit = {}) => {
 				throw new Error('Authentication failed: Please log in again');
 			}
 
-			// 갱신된 토큰으로 재요청
 			headers.Authorization = `Bearer ${accessToken}`;
 			const retryResponse = await fetch(url, { ...options, headers });
 
@@ -63,7 +62,7 @@ const fetchRefreshToken = async (): Promise<string | null> => {
 		}
 
 		throw new Error(`Refresh token request failed with status: ${response.status}`);
-	} catch (error) {
+	} catch (error: any) {
 		console.error('Fetch refresh token error:', error.message);
 		return null;
 	}
