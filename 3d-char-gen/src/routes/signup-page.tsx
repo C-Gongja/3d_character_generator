@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import ExternalAuthButtons from "../components/auth-components/externalAuth";
 import { fetchSignup } from "../api/auth/authApi";
 import { SignupFormData } from "../api/auth/user-types";
-import { useUserStore } from "../state-management/user-store";
+import { useUserStore } from "../state-management/useUserStore";
 
 export default function SignUp() {
 	const navigate = useNavigate();

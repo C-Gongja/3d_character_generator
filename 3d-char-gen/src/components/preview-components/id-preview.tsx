@@ -1,4 +1,4 @@
-import { useCustomStore } from '../../state-management/userCustom-store';
+import { useCustomStore } from '../../state-management/useUserCustomStore';
 
 export default function IDPreview() {
 	const { userCustomProfile } = useCustomStore();

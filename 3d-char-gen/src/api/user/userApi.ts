@@ -1,5 +1,5 @@
 import { apiClient } from "./apiClient";
-import { UserProfile } from "../../state-management/userCustom-store";
+import { UserProfile } from "../../state-management/useUserCustomStore";
 
 const BASE_URL = "http://localhost:5001/api/user";
 const CUSTOM_BASE_URL = "http://localhost:5001/api/usercustom";

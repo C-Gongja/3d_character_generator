@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { fetchAssets, fetchCategories } from "../api/custom/customApi.ts";
-import { Asset, Category, Customization, Store } from "./custom-Interface.ts";
+import { Asset, Category, Customization, Store } from "../types/useCustomStoreType.ts";
 import { MeshStandardMaterial } from "three";
 
 const REQUIRED_CATEGORIES = ["Head", "Eyes", "Nose", "Top", "Bottom"];

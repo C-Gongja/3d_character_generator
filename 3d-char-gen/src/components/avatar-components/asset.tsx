@@ -1,6 +1,6 @@
 import { useGLTF } from "@react-three/drei"
 import { useEffect, useMemo } from "react";
-import { useConfigStore } from "../../state-management/custom-store";
+import { useConfigStore } from "../../state-management/useCustomStore";
 import { Object3D } from "three";
 
 interface AssetProps {

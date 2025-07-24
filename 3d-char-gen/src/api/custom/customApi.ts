@@ -1,4 +1,4 @@
-import { Asset, Category } from "../../state-management/custom-Interface";
+import { Asset, Category } from "../../types/useCustomStoreType";
 
 const BASE_URL = "http://localhost:5001/api/custom";
 

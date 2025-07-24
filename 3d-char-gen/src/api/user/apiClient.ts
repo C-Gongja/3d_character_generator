@@ -1,4 +1,4 @@
-import { useUserStore } from "../../state-management/user-store";
+import { useUserStore } from "../../state-management/useUserStore";
 
 const AUTH_BASE_URL = "http://localhost:5001/api/auth";
 

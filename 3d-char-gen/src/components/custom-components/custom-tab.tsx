@@ -1,5 +1,5 @@
 import { } from 'react';
-import { useConfigStore } from '../../state-management/custom-store';
+import { useConfigStore } from '../../state-management/useCustomStore';
 
 export default function CustomTab() {
 	const { categories, currentCategory, setCurrentCategory } = useConfigStore();

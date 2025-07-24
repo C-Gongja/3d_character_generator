@@ -1,5 +1,5 @@
 import { apiClient } from "./apiClient";
-import { UserCustomProfile } from "../../state-management/userCustom-Interface";
+import { UserCustomProfile } from "../../types/useUserCustomType";
 
 const CUSTOM_BASE_URL = "http://localhost:5001/api/usercustom";
 

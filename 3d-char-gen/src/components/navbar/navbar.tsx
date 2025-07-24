@@ -1,5 +1,5 @@
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { useUserStore } from '../../state-management/user-store';
+import { useUserStore } from '../../state-management/useUserStore';
 import { useNavigate } from 'react-router-dom';
 
 const navigation = [

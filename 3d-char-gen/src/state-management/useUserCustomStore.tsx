@@ -1,8 +1,8 @@
 import { create } from 'zustand';
-import { useConfigStore } from './custom-store';
+import { useConfigStore } from './useCustomStore';
 import { fetchUserCustom, fetchUserCustomCreate, fetchUserCustomUpdate } from '../api/user/userCustomApi';
-import UserStore, { CustomField, UserCustomProfile } from './userCustom-Interface';
-import { useUserStore } from './user-store';
+import UserStore, { CustomField, UserCustomProfile } from '../types/useUserCustomType';
+import { useUserStore } from './useUserStore';
 
 // 유저 프로필 상태를 관리하는 Zustand store
 export const useCustomStore = create<UserStore>((set, get) => ({

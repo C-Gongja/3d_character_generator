@@ -11,7 +11,7 @@ import ProtectedRoute from "./components/protected-route";
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <ProtectedRoute><Layout /></ProtectedRoute>,
+		element: <Layout />,
 		children: [
 			{
 				path: "",

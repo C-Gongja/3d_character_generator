@@ -1,8 +1,8 @@
 import { ColorPicker, useColor, ColorService, IColor } from "react-color-palette";
 import "react-color-palette/css";
-import { useConfigStore } from "../../state-management/custom-store";
+import { useConfigStore } from "../../state-management/useCustomStore";
 import { useEffect, useState } from "react";
-import { useCustomStore } from "../../state-management/userCustom-store";
+import { useCustomStore } from "../../state-management/useUserCustomStore";
 
 export default function ColorOptions() {
 	const [colorOptions, setColorOptions] = useState<string[]>([]);

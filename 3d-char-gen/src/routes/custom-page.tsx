@@ -1,8 +1,8 @@
 import CustomMenu from "../components/custom-components/custom-menu";
 import AvatarContainer from "../components/avatar-components/avatar-container";
 import Preview from "../components/preview-components/preview";
-import { useConfigStore } from "../state-management/custom-store";
-import { useCustomStore } from "../state-management/userCustom-store";
+import { useConfigStore } from "../state-management/useCustomStore";
+import { useCustomStore } from "../state-management/useUserCustomStore";
 import { useEffect } from "react";
 
 

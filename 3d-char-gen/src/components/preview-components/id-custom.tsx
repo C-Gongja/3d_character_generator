@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
-import { UserCustomProfile } from "../../state-management/userCustom-Interface";
-import { useCustomStore } from "../../state-management/userCustom-store";
+import { UserCustomProfile } from "../../types/useUserCustomType";
+import { useCustomStore } from "../../state-management/useUserCustomStore";
 
 export default function IDCustom() {
 	const { userCustomProfile, updateField } = useCustomStore();

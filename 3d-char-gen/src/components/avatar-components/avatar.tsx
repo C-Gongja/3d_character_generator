@@ -1,6 +1,6 @@
 import { useGLTF } from "@react-three/drei";
 import { Suspense, useRef } from "react";
-import { useConfigStore } from "../../state-management/custom-store";
+import { useConfigStore } from "../../state-management/useCustomStore";
 import { Asset } from "./asset";
 import { Group } from "three";
 

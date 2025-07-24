@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Navigate } from "react-router-dom";
-import { useUserStore } from '../state-management/user-store';
+import { useUserStore } from '../state-management/useUserStore';
 
 function ProtectedRoute({ children }: { children: ReactNode }) {
 	const { user, accessToken, verifyUser } = useUserStore();
@@ -24,7 +24,7 @@ function ProtectedRoute({ children }: { children: ReactNode }) {
 		return <Navigate to="/login" />;
 	}
 	return (
-		<div className='pt-20'>
+		<div className=''>
 			{children}
 		</div>
 	);

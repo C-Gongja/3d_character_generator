@@ -1,7 +1,7 @@
-import { useConfigStore } from "../../state-management/custom-store";
-import { useCustomStore } from "../../state-management/userCustom-store";
-import { Asset } from "../../state-management/custom-Interface";
-import { UserCustomProfile } from "../../state-management/userCustom-Interface";
+import { useConfigStore } from "../../state-management/useCustomStore";
+import { useCustomStore } from "../../state-management/useUserCustomStore";
+import { Asset } from "../../types/useCustomStoreType";
+import { UserCustomProfile } from "../../types/useUserCustomType";
 
 export default function CustomAssets() {
 	// const { currentCategory, changeAsset, customization } = useConfigStore();
